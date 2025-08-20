@@ -1,0 +1,168 @@
+body {
+  background: linear-gradient(135deg, #e0e7ff 0%, #f9fafb 100%);
+  min-height: 100vh;
+  font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  margin: 0;
+  padding-left: 150px; /* 左側模式欄保留空間 */
+}
+
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(31,38,135,0.18);
+  padding: 32px 24px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 1.6em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #3b3b4f;
+}
+
+/* 手勢卡片 */
+.gesture-card {
+  display: flex;
+  align-items: center;
+  background: rgba(236, 236, 255, 0.8);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  padding: 18px 20px 18px 14px;
+  box-shadow: 0 2px 8px rgba(60, 60, 120, 0.07);
+  transition: box-shadow 0.2s;
+}
+.gesture-card:hover {
+  box-shadow: 0 6px 16px rgba(99,102,241,0.15);
+}
+
+/* 手勢標題 */
+.gesture-title {
+  flex: 0 0 220px; /* 原來180 → 加大避免字被壓 */
+  font-size: 1.33em; /* 加大字體 */
+  font-weight: 700;
+  color: #656599;
+  margin-right: 20px;
+  letter-spacing: 1.5px;
+}
+
+/* 下拉選單 */
+.action-select {
+  flex: 1 1 auto;
+  min-width: 280px; /* 原來220 → 加大格子寬度 */
+  max-width: 100%;
+  font-size: 1.15em;
+  padding: 12px 14px; /* 加大內距避免貼邊 */
+  border-radius: 9px;
+  border: 1.5px solid #c7d2fe;
+  background: #f4f7ff;
+  transition: border 0.2s;
+  box-sizing: border-box;
+}
+.action-select:focus {
+  border: 2px solid #6366f1;
+  outline: none;
+}
+
+/* 儲存按鈕 */
+.save-btn {
+  width: 100%;
+  padding: 14px 0;
+  margin-top: 18px;
+  background: linear-gradient(90deg, #6366f1 0%, #818cf8 100%);
+  color: #fff;
+  font-size: 1.13em;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.13);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.save-btn:hover {
+  background: linear-gradient(90deg, #818cf8 0%, #6366f1 100%);
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.17);
+}
+
+/* 左側模式選擇欄 */
+.mode-checkbox-block {
+  position: fixed;
+  top: 110px;
+  left: 0;
+  background: #f4f7ff;
+  padding: 26px 28px 18px 16px;
+  border-radius: 0 14px 14px 0;
+  box-shadow: 0 2px 16px rgba(99,102,241,0.07);
+  font-size: 1.08em;
+  color: #3b3b4f;
+  z-index: 1500;
+  min-width: 150px;
+}
+.mode-checkbox-block .mode-title {
+  font-weight: bold;
+  color: #5f5fa2;
+  margin-bottom: 12px;
+  font-size: 1.18em;
+}
+.mode-checkbox-block label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  user-select: none;
+  cursor: pointer;
+}
+.mode-checkbox-block input[type="radio"] {
+  margin-right: 7px;
+  accent-color: #6366f1;
+}
+
+/* 冷氣溫度區塊 */
+.ac-temp-block input[type="number"] {
+  width: 110px;
+  height: 54px;
+  font-size: 2.0em;
+  border-radius: 6px;
+  border: 1.2px solid #c7d2fe;
+  padding: 3px 8px 3px 10px;
+  margin-left: 8px;
+  box-sizing: border-box;
+  background: #f4f7ff;
+}
+.ac-temp-block label {
+  font-size: 1.15em;
+}
+
+/* 右下系統說明 */
+.system-guide {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2000;
+}
+.system-guide a {
+  display: inline-block;
+  background: #fff7e6;
+  padding: 12px 18px;
+  border: 1.3px solid #ffcc80;
+  border-radius: 9px;
+  color: #d17b00;
+  text-decoration: none;
+  font-size: 1.06em;
+  font-weight: 500;
+  box-shadow: 0 2px 12px rgba(200,150,40,0.08);
+  transition: background 0.17s;
+}
+.system-guide a:hover {
+  background: #ffeecc;
+  color: #a65d00;
+}
+
+/* 響應式 */
+@media (max-width: 700px) {
+  body { padding-left: 95px; }
+  .gesture-title { flex: 0 0 160px; font-size: 1.1em; }
+  .action-select { min-width: 200px; font-size: 1em; }
+}
