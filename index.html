@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>手勢辨識自定義控制面板</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- 左側模式選擇 -->
+  <div class="mode-checkbox-block">
+    <div class="mode-title">目前模式</div>
+    <label><input type="radio" name="mode" value="tv"> 電視</label>
+    <label><input type="radio" name="mode" value="fan"> 電風扇</label>
+    <label><input type="radio" name="mode" value="ac"> 冷氣</label>
+  </div>
+  <div class="container">
+    <h1 id="device-title">手勢控制設定</h1>
+
+    <div id="forms-container"></div>
+    <button id="save-all-btn" class="save-btn">儲存設定</button>
+    <div id="save-result"></div>
+
+       <!-- 新增一鍵啟動與停止按鈕區 -->
+    <div style="margin-top: 20px;">
+      <button id="start-project-btn">一鍵啟動手勢辨識程式</button>
+      <button id="stop-project-btn" style="margin-left: 10px;">停止手勢辨識程式</button>
+      <p id="run-status" style="margin-top: 10px; color: green;"></p>
+    </div>
+  </div>
+
+  <!-- 右下角系統說明 -->
+  <div class="system-guide">
+    <a href="https://docs.google.com/document/d/1zrMTe3aPj2c1_H4qb6OILLlc-BvvKGWo5BvMwXhWg5E/edit?usp=sharing"
+       target="_blank" rel="noopener">
+      🔗 系統使用說明文件
+    </a>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
