@@ -8,7 +8,8 @@ import os
 import broadlink
 
 # ========== 參數 ==========
-ADB_PATH = "adb"  # 需改成 adb 所在完整路徑或確實設環境變數
+ADB_PATH = r"C:\桌面\platform-tools\adb.exe"
+  # 需改成 adb 所在完整路徑或確實設環境變數
 GESTURE_MAP_FILE = 'gesture_config.json'
 reload_interval = 3
 GESTURE_CONFIRMATION_FRAMES = 5
@@ -32,6 +33,11 @@ fan_codes = {
     "ac_power":b'&\x00\x96\x00d<\x0e\x11\x0c\x11\r,\r+\r\x11\x0e\x10\x0e\x11\r\x11\r+\r,\r+\x0e,\x0c,\r,\x0c,\r,\r\x10\x0e\x11\r,\r+\r,\x0c,\x0e,\x0c,\r+\r\x11\r,\x0e+\r,\r+\r,\r+\x0e\x10\x0e\x11\r\x11\r+\r,\x0c,\x0e,\x0c,\r\x11\r\x11\r\x11\r,\r,\x0c\x11\r\x11\r,\x0c\x12\r\x11\r,\r+\r,\r+\x0e,\r+\r\x11\r\x11\r+\r\x11\x0e\x11\r\x11\r\x11\r\x11\x0c,\r\x11\x0e\x11\x0c\x12\x0c,\r\x11\r+\r,\x0e\x00\r\x05'  #冷氣開關
 }
 
+# 讓 air_down 與 air_up 也對應到 fan_reduce 與 fan_add
+fan_codes["air_down"] = fan_codes["fan_reduce"]
+fan_codes["air_up"] = fan_codes["fan_add"]
+
+
 device = broadlink.gendevice(DEVICE_TYPE, (DEVICE_IP, 80), DEVICE_MAC)
 device.auth()
 
@@ -53,17 +59,20 @@ def load_gesture_commands_and_mode():
 
 def map_command(cmd_key):
     mapping = {
-        "power": f"{ADB_PATH} shell input keyevent 26",
-        "home": f"{ADB_PATH} shell input keyevent 3",
-        "channel_up": f"{ADB_PATH} shell input keyevent 166",
-        "channel_down": f"{ADB_PATH} shell input keyevent 167",
-        "volume_up": f"{ADB_PATH} shell input keyevent 24",
-        "volume_down": f"{ADB_PATH} shell input keyevent 25",
-        "choose": f"{ADB_PATH} shell input keyevent 66",
-        "return": f"{ADB_PATH} shell input keyevent 4",
-        "youtube": f"{ADB_PATH} shell am start -n com.google.android.youtube.tv/com.google.android.apps.youtube.tv.activity.ShellActivity"
+        "power": f"{ADB_PATH} shell input keyevent 26",          # 電源
+        "home": f"{ADB_PATH} shell input keyevent 3",            # HOME鍵
+        "channel_up": f"{ADB_PATH} shell input keyevent 19",     # 方向鍵上 (DPAD_UP)
+        "channel_down": f"{ADB_PATH} shell input keyevent 20",   # 方向鍵下 (DPAD_DOWN)
+        "channel_right": f"{ADB_PATH} shell input keyevent 22",  # 方向鍵右 (DPAD_RIGHT)
+        "channel_left": f"{ADB_PATH} shell input keyevent 21",   # 方向鍵左 (DPAD_LEFT)
+        "volume_up": f"{ADB_PATH} shell input keyevent 24",      # 音量+
+        "volume_down": f"{ADB_PATH} shell input keyevent 25",    # 音量-
+        "choose": f"{ADB_PATH} shell input keyevent 23",         # 選擇鍵 (DPAD_CENTER)
+        "return": f"{ADB_PATH} shell input keyevent 4",          # 返回鍵
+        "youtube": f"{ADB_PATH} shell am start -n com.google.android.youtube.tv/com.google.android.apps.youtube.tv.activity.ShellActivity"  # YouTube
     }
     return mapping.get(cmd_key.lower(), None)
+
 
 
 
@@ -102,11 +111,12 @@ def send_broadlink_command(cmd_key, current_mode):
         return False
 
 
-def send_fan_command_twice(cmd_key):
-    # 電風扇風量加減指令需連發兩次，間隔1秒
-    send_broadlink_command(cmd_key)
-    time.sleep(1)
-    send_broadlink_command(cmd_key)
+   # 電風扇風量加減指令需連發兩次，間隔1秒
+def send_fan_command_twice(cmd_key, current_mode):
+    send_broadlink_command(cmd_key, current_mode)
+    time.sleep(1.5)
+    send_broadlink_command(cmd_key, current_mode)
+
 
 def send_ac_temperature_command(temp, current_mode):
     code_key = f"ac_{temp}"
@@ -277,29 +287,42 @@ def main():
                 print(f"辨識到穩定手勢：[{current_gesture}]，已觸發指令！")
                 cmd_to_send = gesture_commands.get(current_gesture)
 
+                gesture_name = current_gesture
+                if gesture_name == 'PEACE':
+                    gesture_name = 'YA'  # 轉成 YA 手勢那個鍵名
+
+                cmd_to_send = gesture_commands.get(gesture_name)
+
                 if current_mode == "fan":
-                    if cmd_to_send in {"fan_add", "fan_reduce"}:
+                    double_send_cmds = {"fan_add", "fan_reduce", "air_up", "air_down"}
+                    if cmd_to_send in double_send_cmds:
                         send_fan_command_twice(cmd_to_send, current_mode)
                     elif cmd_to_send:
                         send_broadlink_command(cmd_to_send, current_mode)
 
-                elif current_mode == "ac":
                     # 冷氣溫度加減邏輯
-                    if current_gesture == "UP":
+                if current_mode == "ac":
+                    if cmd_to_send == "degree_up":
                         if current_ac_temp < 27:
                             current_ac_temp += 1
                             send_ac_temperature_command(current_ac_temp, current_mode)
-                    elif current_gesture == "DOWN":
+                    elif cmd_to_send == "degree_down":
                         if current_ac_temp > 23:
-                            current_ac_temp -=1
+                            current_ac_temp -= 1
                             send_ac_temperature_command(current_ac_temp, current_mode)
-                    elif cmd_to_send:
-                        send_broadlink_command(cmd_to_send, current_mode)
+                    else:
+                        if cmd_to_send:
+                            send_broadlink_command(cmd_to_send, current_mode)
+
 
                 else:
                     # 其他模式使用ADB指令
                     if cmd_to_send:
-                        execute_adb_command(cmd_to_send)
+                        adb_command = map_command(cmd_to_send)
+                        if adb_command:
+                            execute_adb_command(adb_command)
+                        else:
+                            print(f"找不到對應的 adb 指令: {cmd_to_send}")
 
             prev_gesture = current_gesture
 
