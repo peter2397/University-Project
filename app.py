@@ -4,7 +4,6 @@ import subprocess
 from pyngrok import ngrok
 import atexit
 
-# 設定你的 Ngrok Authtoken
 ngrok.set_auth_token("your token")
 
 PYTHON_PATH = r"C:\Users\hu030\PycharmProjects\FlaskProject\.venv\Scripts\python.exe"
