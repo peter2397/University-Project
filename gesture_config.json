@@ -1,11 +1,11 @@
 {
   "tv": {
-    "PALM": "volume_up",
-    "FIST": "power",
+    "PALM": "home",
+    "FIST": "choose",
     "OK": "choose",
     "THUMB_LEFT": "return",
     "THUMB_UP": "volume_up",
-    "THUMB_DOWN": "channel_down",
+    "THUMB_DOWN": "volume_down",
     "RIGHT": "channel_right",
     "LEFT": "channel_left",
     "UP": "channel_up",
@@ -15,20 +15,20 @@
   "fan": {
     "PALM": "air_down",
     "FIST": "power",
-    "OK": "air_down",
-    "THUMB_LEFT": "air_down",
+    "OK": "",
+    "THUMB_LEFT": "",
     "THUMB_UP": "",
     "THUMB_DOWN": "",
     "RIGHT": "",
     "LEFT": "",
     "UP": "air_up",
     "DOWN": "air_down",
-    "YA": ""
+    "YA": "power"
   },
   "ac": {
-    "PALM": "degree_down",
+    "PALM": "",
     "FIST": "power",
-    "OK": "degree_up",
+    "OK": "",
     "THUMB_LEFT": "",
     "THUMB_UP": "",
     "THUMB_DOWN": "",
@@ -36,8 +36,8 @@
     "LEFT": "",
     "UP": "degree_up",
     "DOWN": "degree_down",
-    "YA": "power",
-    "ac_init_temp": "26"
+    "YA": "",
+    "ac_init_temp": "25"
   },
   "current_mode": "ac"
 }
