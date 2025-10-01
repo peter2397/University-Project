@@ -5,7 +5,7 @@ from pyngrok import ngrok
 import atexit
 
 # 設定你的 Ngrok Authtoken
-ngrok.set_auth_token("2qI8XKVIU0OJuNiE59vtNfR0lUR_3cWTRbXyax6GGkULTNA89")
+ngrok.set_auth_token("your token")
 
 PYTHON_PATH = r"C:\Users\hu030\PycharmProjects\FlaskProject\.venv\Scripts\python.exe"
 SCRIPT_PATH = r"C:\Users\hu030\PycharmProjects\FlaskProject\gesture_control.py"
