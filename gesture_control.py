@@ -227,7 +227,7 @@ def main():
     cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
-        print("無法開啟攝像頭。")
+        print("無法開啟攝影機。")
         return
 
     prev_gesture = None
