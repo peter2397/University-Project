@@ -3,7 +3,7 @@ body {
   min-height: 100vh;
   font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
   margin: 0;
-  padding-left: 150px; /* 左側模式欄保留空間 */
+  padding-left: 150px;
 }
 
 .container {
@@ -41,8 +41,8 @@ h1 {
 
 /* 手勢標題 */
 .gesture-title {
-  flex: 0 0 220px; /* 原來180 → 加大避免字被壓 */
-  font-size: 1.33em; /* 加大字體 */
+  flex: 0 0 220px; 
+  font-size: 1.33em; 
   font-weight: 700;
   color: #656599;
   margin-right: 20px;
@@ -52,10 +52,10 @@ h1 {
 /* 下拉選單 */
 .action-select {
   flex: 1 1 auto;
-  min-width: 280px; /* 原來220 → 加大格子寬度 */
+  min-width: 280px; 
   max-width: 100%;
   font-size: 1.15em;
-  padding: 12px 14px; /* 加大內距避免貼邊 */
+  padding: 12px 14px; /
   border-radius: 9px;
   border: 1.5px solid #c7d2fe;
   background: #f4f7ff;
